@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+    <head>
+
+        <!-- Webpage Title -->
+        <title>Hello, world!</title>
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bulma CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+
+        <script>
+            function signIn() {
+                let email = $("#email").val();
+                let password = $("#password").val();
+
+                if (email == "") {
+                alert("이메일을 입력해주세요.");
+                $("#email").focus()
+                }
+
+                if (password == "") {
+                     alert("비밀번호를 입력해주세요.");
+                    $("#password").focus();
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/sign_in",
+                    data: {
+                        'email': email,
+                        'password': password
+                    },
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            $.cookie('mytoken', response['token']);
+
+                            alert('로그인 완료!')
+                            window.location.href = '/main'
+                        } else {
+                            alert(response['msg']);
+                        }
+                    }
+                })
+            }
+
+        </script>
+
+    </head>
+    <body>
+        <div class="section has-text-centered">
+            <h1 class="title">로그인</h1>
+            <div class="container" style="width:60%">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="email">email</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input type="email" class="input" placeholder="이메일" name="email" id="email"  pattern=".+@globex\.com" size="30" required >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="password">비밀번호</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input type="password" class="input" id="password" placeholder="비밀번호를 입력하세요." required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="button is-primary" onclick="signIn()">로그인</button>
+            </div>
+            <div class="container" style="width:60%">
+                <h2>아직 회원이 아니라면</h2>
+                <button  onclick="location.href='join.html'">회원가입</button>
+            </div>
+        </div>
+    </body>
+</html>
