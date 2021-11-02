@@ -27,38 +27,28 @@
         }
 
         .header {
-            background-color: yellow;
+            margin-top: 10px;
         }
 
         .top {
             display: flex;
             justify-content: space-between;
         }
+
         .top > div {
-            padding: 20px 20px 0 0;
-            margin: 10px;
+            margin: auto 20px;
             font-size: 30px;
         }
+
         .top > img {
             width: 340px;
-            height: 120px;
+            height: 150px;
             display: flex;
             justify-content: left;
-            border: black 2px solid;
-        }
-
-        .title {
-            display: flex;
-            justify-content: center;
-            height: 400px;
-            width: 100%;
-            margin: auto;
-            background-color: indianred;
         }
 
         .tag {
             padding: 20px;
-            background-color: aqua;
         }
 
         .tag > .group {
@@ -75,87 +65,107 @@
             font-weight: bold;
             background-color: lawngreen;
         }
-        .cards {
-            display: flex;
-        }
+
         .card {
-            width: 300px;
+            width: 600px;
+            margin: 10px;
+            /*display: flex;*/
+            /*justify-content: space-between;*/
         }
 
 
     </style>
-    <script>
 
-    </script>
 </head>
 <body>
 <div class="wrap">
     <div class="header">
         <div class="top">
-            <img src="" alt="logo">
+            <img src="/static/가벼운식탁%20logo1.png" alt="logo">
 
             <!-- jinja이용해서 이름가져오기 -->
             <div>ㅇㅇ님 안녕하세요😃</div>
         </div>
-        <div class="title">
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="..." class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="...">
-                    </div>
+    </div>
+    <div class="banner">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/static/carousel_img1.jpg" class="d-block w-100" alt="...">
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-                        data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-                        data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+                <div class="carousel-item">
+                    <img src="/static/carousel_img2.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/carousel_img3.jpg" class="d-block w-100" alt="...">
+                </div>
             </div>
         </div>
     </div>
+
     <div class="main">
         <div class="tag">
             <div class="group tag1">
-                <button type="button" class="btn btn-success">돼지고기</button>
-                <button type="button" class="btn btn-success">닭고기</button>
-                <button type="button" class="btn btn-success">곤약</button>
-                <button type="button" class="btn btn-success">계란</button>
-                <button type="button" class="btn btn-success">버섯</button>
-                <button type="button" class="btn btn-success">양배추</button>
-                <button type="button" class="btn btn-success">소고기</button>
+                <button onclick="keyword('돼지고기')" type="button" class="btn btn-success">돼지고기</button>
+                <button onclick="keyword('닭고기')" type="button" class="btn btn-success">닭고기</button>
+                <button onclick="keyword('곤약')" type="button" class="btn btn-success">곤약</button>
+                <button onclick="keyword('계란')" type="button" class="btn btn-success">계란</button>
+                <button onclick="keyword('버섯')" type="button" class="btn btn-success">버섯</button>
+                <button onclick="keyword('양배추')" type="button" class="btn btn-success">양배추</button>
+                <button onclick="keyword('소고기')" type="button" class="btn btn-success">소고기</button>
 
             </div>
             <div class="group tag">
-                <button type="button" class="btn btn-success">토마토</button>
-                <button type="button" class="btn btn-success">단호박</button>
-                <button type="button" class="btn btn-success">오리고기</button>
-                <button type="button" class="btn btn-success">가지</button>
-                <button type="button" class="btn btn-success">두부</button>
-                <button type="button" class="btn btn-success">시금치</button>
-                <button type="button" class="btn btn-success">파프리카</button>
+                <button onclick="keyword('토마토')" type="button" class="btn btn-success">토마토</button>
+                <button onclick="keyword('단호박')" type="button" class="btn btn-success">단호박</button>
+                <button onclick="keyword('오리고기')" type="button" class="btn btn-success">오리고기</button>
+                <button onclick="keyword('가지')" type="button" class="btn btn-success">가지</button>
+                <button onclick="keyword('두부')" type="button" class="btn btn-success">두부</button>
+                <button onclick="keyword('시금치')" type="button" class="btn btn-success">시금치</button>
+                <button onclick="keyword('파프리카')" type="button" class="btn btn-success">파프리카</button>
 
             </div>
         </div>
-        <div class="cards">
-            <!-- jinja이용해서 이미지URL, title 가져오기 -->
-            <div class="card" style="width: 18rem;">
-                <a href="#"><img src="/static/img1.jpg" class="card-img-top" alt="..."></a>
-                <div class="card-body">
-                    <p class="card-text">title</p>
-                </div>
-            </div>
+        <div class="cards" id="cards">
         </div>
     </div>
 </div>
+
+<script>
+
+    // 캐러셀 조작
+    $('.carousel').carousel({
+        interval: 2000,
+        wrap: true
+    })
+
+    //키워드 클릭 시 카드 띄우기
+    function keyword(data) {
+        $('#cards').empty();
+        $.ajax({
+            type: "GET",
+            url: "/main",
+            data: {"ingredients": data},
+            success: function (response) {
+                let keyword = response['menu_card']
+                console.log(keyword)
+                for (let i = 0; i < keyword.length; i++) {
+                    let img = keyword[i]['img_url']
+                    let title = keyword[i]['title']
+                    let temp_html = `<div class="card" style="width: 18rem;">
+                                        <a href="/detail"><img src="${img}" class="card-img-top" alt="..."></a>
+                                        <div class="card-body">
+                                            <p class="card-text">${title}</p>
+                                        </div>
+                                    </div>`
+                    $('#cards').append(temp_html)
+                }
+            }
+        })
+
+    }
+
+</script>
 </body>
+
 </html>

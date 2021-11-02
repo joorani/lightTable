@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <!-- jinja이용해서 title가져오기 -->
+    <title>Title</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <style>
+        /*header*/
+        .wrap {
+            width: 1500px;
+            margin: auto;
+        }
+
+        .header {
+            margin-top: 10px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .top > div {
+            margin: auto 20px;
+            font-size: 30px;
+        }
+
+        .top > img {
+            width: 340px;
+            height: 150px;
+            display: flex;
+            justify-content: left;
+        }
+
+        /*details*/
+        .detail_win {
+            background-color: yellow;
+            border: black 1px solid;
+            border-radius: 20px;
+
+        }
+
+        .title {
+            width: 95%;
+            height: 400px;
+            border: black 1px solid;
+            margin: 30px auto;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .title > p {
+            display: block;
+            font-size: 50px;
+            position: absolute;
+            clear: left;
+            float: left;
+            left: 0;
+            bottom: 0;
+        }
+
+        .title > img {
+            width: 600px;
+            height: 400px;
+            border: black 1px solid;
+            margin-left: auto;;
+
+
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="wrap">
+    <div class="header">
+        <div class="top">
+            <img src="/static/가벼운식탁%20logo1.png" alt="logo">
+
+            <!-- jinja이용해서 이름가져오기 -->
+            <div>ㅇㅇ님 안녕하세요😃</div>
+        </div>
+    </div>
+    <div class="detail_win">
+        <div class="title">
+            <p>title</p>
+            <img src="" alt="img">
+        </div>
+        <div class="recipe">
+            <div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="comment_box">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="comment"
+                   aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2">등록</button>
+        </div>
+        <div class="comment">
+
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

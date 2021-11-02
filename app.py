@@ -20,12 +20,38 @@ db.project1.insert_one(doc)
 def main():
     return render_template("main.html")
 
+@app.route('/detail')
+def detail():
+    return render_template("detail.html")
 
-@app.route('/category', methods=['GET'])
-def show_category():
-    keywordData = request.args.get('hashtag')
-    myquery = list(db.project1.find({'ingredients': {'$regex': keywordData}}, {'_id': 0}))
-    return jsonify({'myquery': myquery})
+
+## 메인페이지
+# db에서 재료 가져오기
+@app.route('/main', methods=['GET'])
+def show_menu():
+    keywordData = request.args.get('ingredients')
+    menu_card = list(db.project1.find({'ingredients': {'$regex': keywordData}}, {'_id': 0}))
+    return jsonify({'menu_card': menu_card})
+
+# db에서 유저이름 가져오기(jinja2)
+@app.route('/')
+def user_name():
+    # DB에서 저장된 name 찾아서 main 상단에 나타내기
+    name = db.유저정보db.find({})
+    return render_template("main.html", name=name)
+
+
+
+
+## 상세페이지
+# db에서 제목 가져오기(jinja2)
+@app.route('/')
+def title():
+    # DB에서 저장된 title 찾아서 main title에 나타내기
+    title = db.유저정보db.find({})
+    return render_template("detail.html", name=title)
+
+
 
 
 
