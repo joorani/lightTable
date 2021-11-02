@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>가벼운 식탁</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <style>
+        .wrap {
+            width: 1500px;
+            margin: auto;
+        }
+
+        .header {
+            background-color: yellow;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+        }
+        .top > div {
+            padding: 20px 20px 0 0;
+            margin: 10px;
+            font-size: 30px;
+        }
+        .top > img {
+            width: 340px;
+            height: 120px;
+            display: flex;
+            justify-content: left;
+            border: black 2px solid;
+        }
+
+        .title {
+            display: flex;
+            justify-content: center;
+            height: 400px;
+            width: 100%;
+            margin: auto;
+            background-color: indianred;
+        }
+
+        .tag {
+            padding: 20px;
+            background-color: aqua;
+        }
+
+        .tag > .group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .tag > .group > button {
+            font-size: 25px;
+            margin: 0 8px;
+        }
+
+        .tag > .group > button:hover {
+            font-weight: bold;
+            background-color: lawngreen;
+        }
+        .cards {
+            display: flex;
+        }
+        .card {
+            width: 300px;
+        }
+
+
+    </style>
+    <script>
+
+    </script>
+</head>
+<body>
+<div class="wrap">
+    <div class="header">
+        <div class="top">
+            <img src="" alt="logo">
+
+            <!-- jinja이용해서 이름가져오기 -->
+            <div>ㅇㅇ님 안녕하세요😃</div>
+        </div>
+        <div class="title">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="..." class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="..." class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="..." class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="tag">
+            <div class="group tag1">
+                <button type="button" class="btn btn-success">돼지고기</button>
+                <button type="button" class="btn btn-success">닭고기</button>
+                <button type="button" class="btn btn-success">곤약</button>
+                <button type="button" class="btn btn-success">계란</button>
+                <button type="button" class="btn btn-success">버섯</button>
+                <button type="button" class="btn btn-success">양배추</button>
+                <button type="button" class="btn btn-success">소고기</button>
+
+            </div>
+            <div class="group tag">
+                <button type="button" class="btn btn-success">토마토</button>
+                <button type="button" class="btn btn-success">단호박</button>
+                <button type="button" class="btn btn-success">오리고기</button>
+                <button type="button" class="btn btn-success">가지</button>
+                <button type="button" class="btn btn-success">두부</button>
+                <button type="button" class="btn btn-success">시금치</button>
+                <button type="button" class="btn btn-success">파프리카</button>
+
+            </div>
+        </div>
+        <div class="cards">
+            <!-- jinja이용해서 이미지URL, title 가져오기 -->
+            <div class="card" style="width: 18rem;">
+                <a href="#"><img src="/static/img1.jpg" class="card-img-top" alt="..."></a>
+                <div class="card-body">
+                    <p class="card-text">title</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
