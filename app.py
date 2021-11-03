@@ -36,6 +36,7 @@ def home():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+
         user_info = db.users.find_one({"userid": payload["userid"]})
         return render_template('index.html', user_info=user_info)
         # 로그인시간 만료, 정보 에러시 보여주는 페이지 생성해야함. index.html?? url_for에 연결.
