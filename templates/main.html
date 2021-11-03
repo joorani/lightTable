@@ -19,8 +19,18 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+    <!--font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Hahmlet:wght@400;700;900&family=Poor+Story&display=swap"
+          rel="stylesheet">
+
+
 
     <style>
+        * {
+            font-family: 'Hahmlet', serif;
+        }
         .wrap {
             width: 1500px;
             margin: auto;
@@ -63,7 +73,7 @@
 
         .tag > .group > button:hover {
             font-weight: bold;
-            background-color: lawngreen;
+            background-color: #005a0b;
         }
 
         .card {
@@ -78,94 +88,105 @@
 
 </head>
 <body>
-<div class="wrap">
-    <div class="header">
-        <div class="top">
-            <img src="/static/가벼운식탁%20logo1.png" alt="logo">
+    <div class="wrap">
+        <div class="header">
+            <div class="top">
+                <img src="/static/가벼운식탁%20logo1.png" alt="logo">
 
-            <!-- jinja이용해서 이름가져오기 -->
-            <div>ㅇㅇ님 안녕하세요😃</div>
+                <!-- jinja이용해서 이름가져오기 -->
+                <div>ㅇㅇ님    안녕하세요😃</div>
+            </div>
         </div>
-    </div>
-    <div class="banner">
-        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="/static/carousel_img1.jpg" class="d-block w-100" alt="...">
+        <div class="banner">
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/static/carousel_img1.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/static/carousel_img2.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/static/carousel_img3.jpg" class="d-block w-100" alt="...">
+                    </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="/static/carousel_img2.jpg" class="d-block w-100" alt="...">
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="tag">
+                <div class="group tag1">
+                    <button onclick="keyword('소기기')" type="button" class="btn btn-success">소고기</button>
+                    <button onclick="keyword('돼지고기')" type="button" class="btn btn-success">돼지고기</button>
+                    <button onclick="keyword('닭고기')" type="button" class="btn btn-success">닭고기</button>
+                    <button onclick="keyword('육류')" type="button" class="btn btn-success">육류</button>
+                    <button onclick="keyword('채소류')" type="button" class="btn btn-success">채소류</button>
+                    <button onclick="keyword('해물류')" type="button" class="btn btn-success">해물류</button>
+                    <button onclick="keyword('달걀')" type="button" class="btn btn-success">달걀/유제품</button>
+                    <button onclick="keyword('가공식품')" type="button" class="btn btn-success">가공식품류</button>
                 </div>
-                <div class="carousel-item">
-                    <img src="/static/carousel_img3.jpg" class="d-block w-100" alt="...">
+                <div class="group tag">
+                    <button onclick="keyword('쌀')" type="button" class="btn btn-success">쌀</button>
+                    <button onclick="keyword('밀가루')" type="button" class="btn btn-success">밀가루</button>
+                    <button onclick="keyword('건어물')" type="button" class="btn btn-success">건어물류</button>
+                    <button onclick="keyword('버섯')" type="button" class="btn btn-success">버섯류</button>
+                    <button onclick="keyword('과일')" type="button" class="btn btn-success">과일류</button>
+                    <button onclick="keyword('콩')" type="button" class="btn btn-success">콩/견과류</button>
+                    <button onclick="keyword('곡류')" type="button" class="btn btn-success">곡류</button>
+                    <button onclick="keyword('기타')" type="button" class="btn btn-success">기타</button>
+                </div>
+            </div>
+            <div class="cards" id="cards">
+                <div class="card" style="width: 18rem;">
+{#                    <a onclick="title({{recipeInfo.title}})" <img src="{{recipeInfo.img_url}}" class="card-img-top" alt="..."></a>#}
+{#                    <div class="card-body">#}
+{#                        <p class="card-text">{{recipeInfo.title}}</p>#}
+{#                    </div>#}
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="main">
-        <div class="tag">
-            <div class="group tag1">
-                <button onclick="keyword('돼지고기')" type="button" class="btn btn-success">돼지고기</button>
-                <button onclick="keyword('닭고기')" type="button" class="btn btn-success">닭고기</button>
-                <button onclick="keyword('곤약')" type="button" class="btn btn-success">곤약</button>
-                <button onclick="keyword('계란')" type="button" class="btn btn-success">계란</button>
-                <button onclick="keyword('버섯')" type="button" class="btn btn-success">버섯</button>
-                <button onclick="keyword('양배추')" type="button" class="btn btn-success">양배추</button>
-                <button onclick="keyword('소고기')" type="button" class="btn btn-success">소고기</button>
+    <script>
+        $(document).ready(function () {
+        });
 
-            </div>
-            <div class="group tag">
-                <button onclick="keyword('토마토')" type="button" class="btn btn-success">토마토</button>
-                <button onclick="keyword('단호박')" type="button" class="btn btn-success">단호박</button>
-                <button onclick="keyword('오리고기')" type="button" class="btn btn-success">오리고기</button>
-                <button onclick="keyword('가지')" type="button" class="btn btn-success">가지</button>
-                <button onclick="keyword('두부')" type="button" class="btn btn-success">두부</button>
-                <button onclick="keyword('시금치')" type="button" class="btn btn-success">시금치</button>
-                <button onclick="keyword('파프리카')" type="button" class="btn btn-success">파프리카</button>
-
-            </div>
-        </div>
-        <div class="cards" id="cards">
-        </div>
-    </div>
-</div>
-
-<script>
-
-    // 캐러셀 조작
-    $('.carousel').carousel({
-        interval: 2000,
-        wrap: true
-    })
-
-    //키워드 클릭 시 카드 띄우기
-    function keyword(data) {
-        $('#cards').empty();
-        $.ajax({
-            type: "GET",
-            url: "/main",
-            data: {"ingredients": data},
-            success: function (response) {
-                let keyword = response['menu_card']
-                console.log(keyword)
-                for (let i = 0; i < keyword.length; i++) {
-                    let img = keyword[i]['img_url']
-                    let title = keyword[i]['title']
-                    let temp_html = `<div class="card" style="width: 18rem;">
-                                        <a href="/detail"><img src="${img}" class="card-img-top" alt="..."></a>
-                                        <div class="card-body">
-                                            <p class="card-text">${title}</p>
-                                        </div>
-                                    </div>`
-                    $('#cards').append(temp_html)
-                }
-            }
+        function title(data) {
+            window.location.href = "/detail?title=" + data;
+        }
+        // 캐러셀 조작
+        $('.carousel').carousel({
+            interval: 2000,
+            wrap: true
         })
 
-    }
+        //키워드 클릭 시 카드 띄우기
+        function keyword(data) {
+            $('#cards').empty();
+            $.ajax({
+                type: "GET",
+                url: "/main",
+                data: {"ingredients": data},
+                success: function (response) {
+                    let keyword = response['menu_card']
+                    console.log(keyword)
+                    for (let i = 0; i < keyword.length; i++) {
+                        let img = keyword[i]['img_url']
+                        let title = keyword[i]['title']
+                        let temp_html = `<div class="card" style="width: 18rem;">
+                                            <a onclick="title(${title})" href="#"><img src="${img}" class="card-img-top" alt="..."></a>
+                                            <div class="card-body">
+                                                <p class="card-text">${title}</p>
+                                            </div>
+                                        </div>`
+                        $('#cards').append(temp_html)
+                    }
+                }
+            })
 
-</script>
+        }
+
+    </script>
 </body>
 
 </html>
