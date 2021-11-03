@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <!-- jinja이용해서 title가져오기 -->
+    <title>Title</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <!--font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Hahmlet:wght@400;700;900&family=Poor+Story&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Hahmlet', serif;
+        }
+
+        /*header*/
+        .wrap {
+            width: 1500px;
+            margin: auto;
+        }
+
+        .header {
+            margin-top: 10px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .top > div {
+            margin: auto 20px;
+            font-size: 30px;
+        }
+
+        .top > img {
+            width: 340px;
+            height: 150px;
+            display: flex;
+            justify-content: left;
+        }
+
+        /*상세페이지*/
+        .detail_win {
+            background-color: #efffdf;
+            /*border: black 1px solid;*/
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .title {
+            width: 95%;
+            height: 600px;
+            /*border: black 1px solid;*/
+            margin: 30px auto 10px;
+            display: flex;
+            flex-direction: column
+        }
+
+        .title > img {
+            width: 900px;
+            height: 500px;
+            border: 1px solid black;
+            margin: auto;
+
+        }
+
+        .title > p {
+            display: block;
+            font-size: 40px;
+            margin: auto;
+        }
+
+        hr {
+            border: 1px solid green;
+            width: 95%;
+        }
+
+        .ingredients_box {
+            width: 95%;
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            margin: auto;;
+        }
+
+        .ingredients_box > h3 {
+            display: block;
+            width: 200px;
+            margin: auto;
+        }
+
+        .ingredients_box > .ingredients {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px;
+        }
+
+        .ingredients_box > .ingredients > div {
+            font-size: 25px;
+        }
+
+        .recipe_order {
+            width: 95%;
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 50px;
+            margin: 20px auto;
+        }
+
+        .recipe_order > p {
+            font-size: 20px;
+        }
+
+        /*코멘트 박스*/
+        .comment_box {
+            background-color: #efffdf;
+            /*border: black 1px solid;*/
+            border-radius: 20px;
+            margin-top: 20px;
+            padding: 30px;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="wrap">
+    <div class="header">
+        <div class="top">
+            <img src="/static/가벼운식탁%20logo1.png" alt="logo">
+
+            <!-- jinja이용해서 이름가져오기 -->
+            <div>ㅇㅇ님 안녕하세요😃</div>
+        </div>
+    </div>
+    <div class="detail_win">
+        <div class="title">
+            <!--jinja로 title, img_url 가져오기-->
+            <img src="" alt="img">
+            <p>title</p>
+        </div>
+        <hr>
+        <div class="recipe">
+            <div class="ingredients_box">
+                <h3>재료 준비!</h3>
+                <div class="ingredients">
+                    <div>재료</div>
+                    <div>재료</div>
+                    <div>재료</div>
+                    <div>재료</div>
+                    <div>재료</div>
+                </div>
+            </div>
+            <div class="recipe_order">
+                <p>1. 순서1</p>
+                <p>2. 순서3</p>
+                <p>3. 순서3</p>
+                <p>4. 순서4</p>
+            </div>
+        </div>
+    </div>
+    <div class="comment_box">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="comment"
+                   aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button onclick="inputComment()" class="btn btn-outline-secondary" type="button" id="button-addon2">등록</button>
+        </div>
+        <div class="comment">
+            <table class="table">
+                <tbody id="val">
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        // getTitle()
+        comment_listing();
+    });
+
+    // function getTitle() {
+    //     let titleHref = window.location.href;
+    //     let getTitle = titleHref.split('=');	//getarea를 '='를 기준으로 두 배열 요소로 분리
+    //     let titleData = getTitle[1];	//분리한 배열 중 두번째 요소 변수에 넣기
+    //     // console.log(getTitle)
+    //     // console.log(titleData)
+    //     let tileAddress = decodeURI(titleData)
+    //     detailWin(tileAddress)
+    // }
+
+    // function detailWin(data) {
+    //     $('#ct1').empty();
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "/detail",
+    //         data: {"title": data}, //수정필요
+    //         success: function (response) {
+    //             let detailWin = response['getdetailWin']
+    //             // console.log(detailWin)
+    //             let img = detailWin['img_url']
+    //             let title = detailWin['title']
+    //
+    //             let temp_html = ``
+    //
+    //             $('#ct1').append(temp_html)
+    //
+    //         }
+    //     })
+    //
+    // }
+
+    //코멘트 리스팅 : name받아오기?????
+    function comment_listing() {
+        $.ajax({
+            type: "GET",
+            url: "/comment",
+            data: {},
+            success: function (response) {
+                let commnetList = response["commnetList"];
+
+                for (let i = 0; i < commnetList.length; i++) {
+                    let name = commnetList[i]['name']
+                    let commnet = commnetList[i]['comment']
+
+                    let temp_html = `<tr>
+                                        <th scope="row">${name}</th>
+                                        <td>${commnet}</td>
+                                   </tr>`
+
+                    $('#val').append(temp_html)
+                }
+            }
+        })
+    }
+
+    // 코멘트 입력하기 : name받아오기?????
+    function inputComment() {
+        let ea = $('#comment').val()
+        // 코멘트 API 연결
+        $.ajax({
+            type: "POST",
+            url: "/commet",
+            data: {commnet_give: commnet},
+            success: function (response) { // 성공하면
+                alert(response["msg"]);
+                window.location.reload()
+            }
+        })
+    }
+
+</script>
+</body>
+</html>
