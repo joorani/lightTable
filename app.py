@@ -1,3 +1,4 @@
+import jwt, datetime, hashlib
 
 @app.route('/main')
 def home():
