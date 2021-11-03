@@ -1,11 +1,14 @@
 
 import requests
 
-from flask import Flask, render_template, jsonify, request, redirect
+from flask import Flask, render_template, jsonify, request, redirect, url_for
 from bson.json_util import loads, dumps
-import jwt, datetime, hashlib
+import jwt
+import datetime
+import hashlib
 
 from pymongo import MongoClient
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 # git에 올라가면 안되는 내용!
@@ -14,14 +17,12 @@ app = Flask(__name__)
 
 # SECRET_KEY = 'SPARTA'
 
-client = MongoClient('localhost', 27017)
-db = client.projectdb
-collection = db.collection
+client = MongoClient('3.35.48.69', 27017, username="light", password="table")
+db = client.lightTable
 
 doc = {'img_url': 'https://recipe1.ezmember.co.kr/cache/recipe/2018/10/29/0dd4c2525a4585417e37cff57a7701d11_m.jpg',
        'title': '돼지고기조림', 'ingredients':'돼지고기, 간장','recipe':'곤약 넣고 조리기..'}
 db.project1.insert_one(doc)
-
 
 @app.route('/')
 def main():
@@ -39,7 +40,6 @@ def home():
 
         user_info = db.users.find_one({"userid": payload["userid"]})
         return render_template('index.html', user_info=user_info)
-        # 로그인시간 만료, 정보 에러시 보여주는 페이지 생성해야함. index.html?? url_for에 연결.
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -126,20 +126,23 @@ def recipecards():
     recipeInfo = list(db.project1.find({'ingredients': {'$regex': ingredientsData}}, {'_id': 0}))
     return render_template("main.html", recipeInfo=recipeInfo)
 
-## 상세페이지
-# db에서 제목 가져오기(jinja2)
-@app.route('/detail')
-def title():
-    # DB에서 저장된 title 찾아서 main title에 나타내기
-    title = list(db.레시피db.find({}))
-    return render_template("detail.html", title=title)
+## 상세페이지(리뷰도 보여줘야되기 때문에 로그인한 사람만 볼 수 있음)
+@app.route("/detail/<recipe_title>")
+def detail(recipe_title):
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        userid = (payload["id"])
 
-# 상세페이지에 제목가져오기
-@app.route('/detail', methods=['GET'])
-def show_detailWin():
-    titleData = request.args.get('title')
-    getdetailWin = list(db.레시피db.find({'title': {'$regex': titleData}}, {'_id': 0})) #db 확인
-    return jsonify({'getdetailWin': getdetailWin})
+        detail_recipe = db.recipe.find_one({'title': recipe_title}, {'_id': 0})
+
+        pickedList = db.users.find_one({'userid': userid}, {'_id': 0})
+        reviews = list(db.comments.find({'title': recipe_title))
+        return render_template("detail.html", recipe=detail_recipe, comments=pickedList)
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 # 코멘트 달기
 @app.route('/comment', methods=['POST'])
@@ -160,7 +163,7 @@ def save_order():
 @app.route('/comment', methods=['GET'])
 def view_orders():
     commnetList = list(db.commetndb.find({},{'_id':False})) #db 확인
-    return jsonify({'commnetList':commnetList})
+    return jsonify({'commentList':commnetList})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
