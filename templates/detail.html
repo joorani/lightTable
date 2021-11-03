@@ -144,36 +144,30 @@
 <div class="wrap">
     <div class="header">
         <div class="top">
-            <img src="/static/가벼운식탁%20logo1.png" alt="logo">
-
-            <!-- jinja이용해서 이름가져오기 -->
+            <img src="/static/logo.png" alt="logo">
             <div>ㅇㅇ님 안녕하세요😃</div>
         </div>
     </div>
     <div class="detail_win">
         <div class="title">
-            <!--jinja로 title, img_url 가져오기-->
-            <img src="" alt="img">
-            <p>title</p>
+            <img src="{{recipe.image}}" alt="{{recipe.title}}">
+            <p>{{recipe.title}}</p>
         </div>
         <hr>
         <div class="recipe">
-            <div class="ingredients_box">
+           <div class="ingredients_box">
                 <h3>재료 준비!</h3>
-                <div class="ingredients">
-                    <div>재료</div>
-                    <div>재료</div>
-                    <div>재료</div>
-                    <div>재료</div>
-                    <div>재료</div>
-                </div>
+                <ul class="ingredients">
+                    {% for ingredient in recipe.ingredients %}
+                        <li>{{ingredient}}</li>
+                    {% endfor %}
+                </ul>
             </div>
-            <div class="recipe_order">
-                <p>1. 순서1</p>
-                <p>2. 순서3</p>
-                <p>3. 순서3</p>
-                <p>4. 순서4</p>
-            </div>
+             <ol class="recipe_order">
+                {% for step in recipe.steps %}
+                    <li>{{step}}</li>
+                {% endfor %}
+            </ol>
         </div>
     </div>
     <div class="comment_box">
