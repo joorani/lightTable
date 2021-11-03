@@ -156,23 +156,24 @@
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
 		<div class="field">
+			<h1>회원가입</h1>
 			<input id="username" class="input"type="text" placeholder="이름" />
-			<div class="id-field">
+			<div class="id-field input-field">
 				<div id="btn-check-dup" >
 					<input id="userid" type="text" placeholder="아이디"/>
-					<button onclick="check_dup()">중복확인</button>
+					<button class="check-btn" onclick="check_dup()">중복 확인</button>
 				</div>
-				<p id="help-id" class="help is-safe" >아이디는 2-10자의 영문과 숫자와 일부 특수문자(._-)만 입력 가능합니다.</p>
+				<span id="help-id" class="help is-safe">아이디는 2-10자의 영문과 숫자와 일부 특수문자(._-)만 입력 가능합니다.</span>
 			</div>
-			<div class="pw-field">
-				<input id="password"  type="password" placeholder="비밀번호">
-				<p id="help-password" class="help is-safe" >영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요.
-					특수문자(!@#$%^&*)도 사용 가능합니다.</p>
+			<div class="pw-field input-field">
+				<input id="password" type="password" placeholder="비밀번호"/>
+				<span id="help-password" class="help is-safe" >영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요.
+					특수문자(!@#$%^&*)도 사용 가능합니다.</span>
 			</div>
-			<div class="pw-field">
+			<div class="pw-field input-field">
 				<input id="check-pw" type="password"
 					   placeholder="비밀번호 재입력">
-				<p id="help-check-pw" class="help is-safe">비밀번호를 다시 한 번 입력해주세요.</p>
+				<span id="help-check-pw" class="help is-safe">비밀번호를 다시 한 번 입력해주세요.</span>
 			</div>
 			<button class="btn">Sign Up</button>
 		</div>
@@ -189,12 +190,14 @@
 		<div class="overlay">
 			<div class="overlay-panel overlay-left">
 				<img src="../static/logo1.png" width="300px">
-				<p>가벼운 식탁은 ..........</p>
+				<p class="logo-des">다이어트 레시피 찾기 힘드셨죠?
+					쉽고 맛있는 건강레시피
+					가벼운 식탁과 함께하세요.</p>
 				<button class="ghost btn" id="signIn" onclick="removeClass()">로그인</button>
 			</div>
 			<div class="overlay-panel overlay-right">
 				<img src="../static/logo1.png" width="300px">
-				<p>아직 회원이 아니세요?</p>
+				<p class="logo-des">아직 회원이 아니세요?</p>
 				<button class="ghost btn" id="signUp" onclick="addClass()">회원가입</button>
 			</div>
 		</div>

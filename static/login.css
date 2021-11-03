@@ -54,6 +54,7 @@ a {
 	letter-spacing: 1px;
 	text-transform: uppercase;
 	transition: transform 80ms ease-in;
+	margin-top: 20px;
 }
 
 .btn:active {
@@ -75,19 +76,20 @@ a {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	padding: 0 50px;
+	padding: 0 30px;
 	height: 100%;
 	text-align: center;
+	margin-top: 10px;
 }
-#btn-check-dup{
-	display: flex;
-}
+
+
 input {
 	background-color: #eee;
 	border: none;
 	padding: 12px 15px;
 	margin: 8px 0;
 	width: 100%;
+
 }
 
 .container {
@@ -213,5 +215,27 @@ input {
 }
 
 .help {
+	text-align: start;
 	font-size: 8px;
+}
+
+#btn-check-dup{
+	display: flex;
+	width: 100%;
+	align-items: center;
+}
+
+.check-btn {
+	height: 100%;
+	background-color: #FF4B2B;
+	text-align: center;
+	border: none;
+	color: white;
+	padding: 5px 15px;
+}
+
+.logo-des {
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 30px;
 }
