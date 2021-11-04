@@ -111,12 +111,14 @@
                         let img = keyword[i]['image']
                         let title = keyword[i]['title']
                         let id = keyword[i]['_id']['$oid']
-                        let temp_html = `<div class="card" style="width: 18rem;">
-                                        <<a href="/detail?id=${id}"><img src="${img}" class="card-img-top" alt="..."></a>
-                                        <div class="card-body">
-                                            <p class="card-text" id="tile_name">${title}</p>
-                                        </div>
-                                    </div>`
+                        let temp_html = `<li class="card-box">
+                                            <a href="/detail?id=${id}">
+                                                <div class="card-image">
+                                                    <img src="${img}" alt="...">
+                                                </div>
+                                                <p class="card-txt" id="tile_name">${title}</p>
+                                            </a>
+                                        </li>`
                         $('#cards').append(temp_html)
                     }
                 }
