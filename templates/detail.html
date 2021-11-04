@@ -78,7 +78,7 @@
 <div class="wrap">
     <div class="header">
         <div class="top">
-            <img src="/static/images/logo.png" alt="logo">
+            <img src="/static/images/logo.png" alt="logo" onclick="window.location.href='/main'">
             <div>{{ user.username }}님 안녕하세요😃</div>
         </div>
     </div>
@@ -92,11 +92,15 @@
             <div class="ingredients_box">
                 <h3>재료 준비!</h3>
                 <ul class="ingredients">
-                    <li>{{ recipe.ingredient }}</li>
+                    {% for item in recipe.ingredient %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
                 </ul>
             </div>
             <ol class="recipe_step">
-                {#                <li>{{ recipe.step }}</li>#}
+                {% for order in recipe.step %}
+                <li>{{ order }}</li>
+                {% endfor %}
             </ol>
         </div>
     </div>
