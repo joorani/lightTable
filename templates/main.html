@@ -97,31 +97,29 @@
         })
 
         {#//키워드 클릭 시 카드 띄우기#}
-        {#function keyword(data) {#}
-        {#$('#cards').empty();#}
-        {#$.ajax({#}
-        {#    type: "GET",#}
-        {#    url: "/main/<data>",#}
-        {#    data: {"type": data},#}
-        {#    success: function (response) {#}
-        {#        let keyword = JSON.parse(response['menu_card'])#}
-        {#        for (let i = 0; i < keyword.length; i++) {#}
-        {#            let img = keyword[i]['image']#}
-        {#            let title = keyword[i]['title']#}
-        {#            let id = keyword[i]['_id']['$oid']#}
-        {#            console.log(id)#}
-        {#            let temp_html = `<div class="card" style="width: 18rem;">#}
-        {#                                <a href="/detail?id=${id}"><img src="${img}" class="card-img-top" alt="..."></a>#}
-        {#                                <div class="card-body">#}
-        {#                                    <p class="card-text" id="tile_name">${title}</p>#}
-        {#                                </div>#}
-        {#                            </div>`#}
-        {#            $('#cards').append(temp_html)#}
-        {#        }#}
-        {#    }#}
-        {#}#}
-
-
+        function keyword(data) {
+            $('#cards').empty();
+            $.ajax({
+                type: "GET",
+                url: "/main/type",
+                data: {"type": data},
+                success: function (response) {
+                    let keyword = JSON.parse(response['menu_card'])
+                    for (let i = 0; i < keyword.length; i++) {
+                        let img = keyword[i]['image']
+                        let title = keyword[i]['title']
+                        let id = keyword[i]['_id']['$oid']
+                        let temp_html = `<div class="card" style="width: 18rem;">
+                                        <a href="/detail?id=${id}"><img src="${img}" class="card-img-top" alt="..."></a>
+                                        <div class="card-body">
+                                            <p class="card-text" id="tile_name">${title}</p>
+                                        </div>
+                                    </div>`
+                        $('#cards').append(temp_html)
+                    }
+                }
+            })
+        }
     </script>
 </body>
 </html>

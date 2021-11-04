@@ -87,13 +87,11 @@ def show_menu():
 
 # 메인페이지
 # db에서 재료 가져오기/ 키워트 클릭 시 카드출력
-# @app.route('/main/<type>', methods=['GET'])
-# def show_menu():
-#     keywordData = request.args.get('type')
-#     menu_card = list(db.recipe.find({'type': {'$regex': keywordData}}))
-#     return jsonify({'menu_card': dumps(menu_card)})
-
-
+@app.route('/main/type', methods=['GET'])
+def show_card():
+    keywordData = request.args.get('type')
+    menu_card = list(db.recipe.find({'type': {'$regex': keywordData}}))
+    return jsonify({'menu_card': dumps(menu_card)})
 
 
 ## 상세페이지(리뷰도 보여줘야되기 때문에 로그인한 사람만 볼 수 있음)
