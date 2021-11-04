@@ -74,14 +74,14 @@
             </div>
         </div>
         <div class="cards" id="cards">
-                        <div class="card" style="width: 18rem;">
-                            {% for recipe in recipe_list %}
-                                <a href="#"><img src="{{ recipe.image }}" class="card-img-top" alt="..."></a>
-                                <div class="card-body">
-                                    <p class="card-text">{{ recipe.title }}</p>
-                                </div>
-                            {% endfor %}
-                        </div>
+            <div class="card" style="width: 18rem;">
+                {% for recipe in recipe_list %}
+                    <a href="#">
+                        <img src="{{ recipe.image }}" class="card-img-top" alt="...">
+                        <p class="card-text">{{ recipe.title }}</p>
+                    </a>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
