@@ -290,45 +290,6 @@
     //
     // }
 
-    //코멘트 리스팅 : name받아오기?????
-    function comment_listing() {
-        $.ajax({
-            type: "GET",
-            url: "/comment",
-            data: {},
-            success: function (response) {
-                let commnetList = response["commnetList"];
-
-                for (let i = 0; i < commnetList.length; i++) {
-                    let name = commnetList[i]['name']
-                    let commnet = commnetList[i]['comment']
-
-                    let temp_html = `<tr>
-                                        <th scope="row">${name}</th>
-                                        <td>${commnet}</td>
-                                   </tr>`
-
-                    $('#val').append(temp_html)
-                }
-            }
-        })
-    }
-
-    // 코멘트 입력하기 : name받아오기?????
-    function inputComment() {
-        let ea = $('#comment').val()
-        // 코멘트 API 연결
-        $.ajax({
-            type: "POST",
-            url: "/commet",
-            data: {commnet_give: commnet},
-            success: function (response) { // 성공하면
-                alert(response["msg"]);
-                window.location.reload()
-            }
-        })
-    }
-
     {#            ///////////////// 좋아요 입력값인지 출력값인지 보고 반대로 모양변경하기#}
             function toggle_like(post_id, type) {
                 console.log(post_id, type)
