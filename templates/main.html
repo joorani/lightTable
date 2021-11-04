@@ -73,16 +73,18 @@
                 <button onclick="keyword('기타')" type="button" class="btn btn-success">기타</button>
             </div>
         </div>
-        <div class="cards" id="cards">
-                        <div class="card" style="width: 18rem;">
-                            {% for recipe in recipe_list %}
-                                <a href="/detail?id={{ recipe._id }}"><img src="{{ recipe.image }}" class="card-img-top" alt="..."></a>
-                                <div class="card-body">
-                                    <p class="card-text">{{ recipe.title }}</p>
-                                </div>
-                            {% endfor %}
-                        </div>
-        </div>
+        <ul id="cards">
+            {% for recipe in recipe_list %}
+            <li class="card-box">
+                <a href="/detail?id={{ recipe._id }}">
+                    <div class="card-image">
+                        <img src="{{ recipe.image }}" alt="...">
+                    </div>
+                    <p class="card-txt">{{ recipe.title }}</p>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 
