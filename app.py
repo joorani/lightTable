@@ -14,13 +14,13 @@ app = Flask(__name__)
 
 # SECRET_KEY = 'SPARTA'
 
-client = MongoClient('localhost', 27017)
-db = client.projectdb
-collection = db.collection
+client = MongoClient('3.35.48.69', 27017, username="light", password="table")
+db = client.collections
 
-doc = {'img_url': 'https://recipe1.ezmember.co.kr/cache/recipe/2018/10/29/0dd4c2525a4585417e37cff57a7701d11_m.jpg',
-       'title': '돼지고기조림', 'ingredients':'돼지고기, 간장','recipe':'곤약 넣고 조리기..'}
-db.project1.insert_one(doc)
+
+# doc = {'img_url': 'https://recipe1.ezmember.co.kr/cache/recipe/2018/10/29/0dd4c2525a4585417e37cff57a7701d11_m.jpg',
+#        'title': '돼지고기조림', 'ingredients':'돼지고기, 간장','recipe':'곤약 넣고 조리기..'}
+# db.project1.insert_one(doc)
 
 
 @app.route('/')
