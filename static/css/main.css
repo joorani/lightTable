@@ -1,0 +1,57 @@
+        * {
+            font-family: 'Hahmlet', serif;
+        }
+
+        .wrap {
+            width: 1500px;
+            margin: auto;
+        }
+
+        .header {
+            margin-top: 10px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .top > div {
+            margin: auto 20px;
+            font-size: 30px;
+        }
+
+        .top > img {
+            width: 340px;
+            height: 150px;
+            display: flex;
+            justify-content: left;
+        }
+
+        .tag {
+            padding: 20px;
+        }
+
+        .tag > .group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .tag > .group > button {
+            font-size: 25px;
+            margin: 0 8px;
+        }
+
+        .tag > .group > button:hover {
+            font-weight: bold;
+            background-color: #005a0b;
+        }
+
+        .card {
+            width: 800px;
+            margin: 10px;
+            display: flex;
+                    }
+        .card-text {
+            font-size: 20px;
+        }

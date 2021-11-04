@@ -15,64 +15,12 @@ app = Flask(__name__)
 # app.config["TEMPLATES_AUTO_RELOAD"] = True
 # app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
-# SECRET_KEY = 'SPARTA'
+SECRET_KEY = 'lightTable'
 
 client = MongoClient('3.35.48.69', 27017, username="light", password="table")
 db = client.collections
 
-
-# doc = {'img_url': 'https://recipe1.ezmember.co.kr/cache/recipe/2018/10/29/0dd4c2525a4585417e37cff57a7701d11_m.jpg',
-#        'title': '돼지고기조림', 'ingredients':'돼지고기, 간장','recipe':'곤약 넣고 조리기..'}
-# db.project1.insert_one(doc)
-
-@app.route('/')
-def main():
-    return render_template("main.html")
-
-@app.route('/detail')
-def detail():
-    return render_template("detail.html")
-# login 페이지
-@app.route('/main')
-def home():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-
-        user_info = db.users.find_one({"userid": payload["userid"]})
-        return render_template('index.html', user_info=user_info)
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
-    except jwt.exceptions.DecodeError:
-        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
-
-@app.route('/login')
-def login():
-    msg = request.args.get("msg")
-    return render_template('login.html', msg=msg)
-
-@app.route('/sign_in', methods=['POST'])
-def sign_in():
-    # 로그인
-    userid_receive = request.form['username_give']
-    password_receive = request.form['password_give']
-
-    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
-    result = db.users.find_one({'userid': userid_receive, 'password': pw_hash})
-
-    if result is not None:
-        payload = {
-         'id': userid_receive,
-         'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
-        }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
-
-        return jsonify({'result': 'success', 'token': token})
-    # 찾지 못하면
-    else:
-        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
-
-
+# 회원가입
 @app.route('/join/save', methods=['POST'])
 def sign_up():
     username_receive = request.form['username_give']
@@ -94,77 +42,98 @@ def check_dup():
     exists = bool(db.users.find_one({"userid": userid_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-## 메인페이지
-# db에서 재료 가져오기
-@app.route('/detail/<keyword>')
-def detail(keyword):
-    r = requests.get(f"https://owlbot.info/api/v4/dictionary/{keyword}", headers={"Authorization": "Token [내토큰]"})
-    result = r.json()
-    print(result)
-    return render_template("detail.html", word=keyword, result=result)
+# 로그인
+@app.route('/sign_in', methods=['POST'])
+def sign_in():
+    userid_receive = request.form['userid_give']
+    password_receive = request.form['password_give']
 
+    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    result = db.users.find_one({'userid': userid_receive, 'password': pw_hash})
+    # 유저 정보가 있으면
+    if result is not None:
+        payload = {
+         'id': userid_receive,
+         'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
-## 메인페이지
-# db에서 재료 가져오기/ 키워트 클릭 시 카드출력
-@app.route('/main', methods=['GET'])
+        return jsonify({'result': 'success', 'token': token})
+    # 찾지 못하면
+    else:
+        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
+
+# 첫 페이지- 로그인
+@app.route('/')
+def login():
+    msg = request.args.get("msg")
+    return render_template('login.html', msg=msg)
+
+@app.route('/main')
 def show_menu():
-    keywordData = request.args.get('ingredients')
-    menu_card = list(db.project1.find({'ingredients': {'$regex': keywordData}}, {'_id': 0}))
-    return jsonify({'menu_card': menu_card})
-
-# db에서 유저이름 가져오기(jinja2)
-@app.route('/')
-def user_name():
-    # DB에서 저장된 name 찾아서 main 상단에 나타내기
-    name = db.유저정보db.find({})    # db 확인
-    return render_template("main.html", name=name)
-
-# db에서 title, img 가져오기(jinja2)
-@app.route('/')
-def recipecards():
-    # DB에서 저장된 name 찾아서 main 상단에 나타내기
-    ingredientsData = request.args.get('ingredients')
-    recipeInfo = list(db.project1.find({'ingredients': {'$regex': ingredientsData}}, {'_id': 0}))
-    return render_template("main.html", recipeInfo=recipeInfo)
-
-## 상세페이지(리뷰도 보여줘야되기 때문에 로그인한 사람만 볼 수 있음)
-@app.route("/detail/<recipe_title>")
-def detail(recipe_title):
     token_receive = request.cookies.get('mytoken')
+
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         userid = (payload["id"])
+        user_info = db.users.find_one({"userid": userid}, {"_id": 0})
+        recipe_list = list(db.recipe.find({}, {'_id': 0}))
+        return render_template('main.html', user = user_info, recipe_list = recipe_list)
 
-        detail_recipe = db.recipe.find_one({'title': recipe_title}, {'_id': 0})
-
-        pickedList = db.users.find_one({'userid': userid}, {'_id': 0})
-        reviews = list(db.comments.find({'title': recipe_title))
-        return render_template("detail.html", recipe=detail_recipe, comments=pickedList)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
-# 코멘트 달기
-@app.route('/comment', methods=['POST'])
-def save_order():
-    name_receive = request.form['name_give']
-    comment_receive = request.form['comment_give']
+# 메인페이지
+# db에서 재료 가져오기/ 키워트 클릭 시 카드출력
+# @app.route('/main/<type>', methods=['GET'])
+# def show_menu():
+#     keywordData = request.args.get('type')
+#     menu_card = list(db.recipe.find({'type': {'$regex': keywordData}}))
+#     return jsonify({'menu_card': dumps(menu_card)})
 
-    doc = {
-        'name': name_receive,
-        'comment': comment_receive,
-    }
 
-    print(doc)
-    db.commetndb.insert_one(doc) #db 확인
-    return jsonify({'msg': '등록 완료'})
 
-# comment 목록보기(Read) API
-@app.route('/comment', methods=['GET'])
-def view_orders():
-    commnetList = list(db.commetndb.find({},{'_id':False})) #db 확인
-    return jsonify({'commentList':commnetList})
+
+## 상세페이지(리뷰도 보여줘야되기 때문에 로그인한 사람만 볼 수 있음)
+# @app.route("/detail/<recipe_title>")
+# def detail(recipe_title):
+#     token_receive = request.cookies.get('mytoken')
+#     try:
+#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+#         userid = (payload["id"])
+#
+#         detail_recipe = db.recipe.find_one({'title': recipe_title}, {'_id': 0})
+#
+#         pickedList = db.users.find_one({'userid': userid}, {'_id': 0})
+#         reviews = list(db.comments.find({'title': recipe_title}))
+#         return render_template("detail.html", recipe=detail_recipe, comments=pickedList)
+#     except jwt.ExpiredSignatureError:
+#         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+#     except jwt.exceptions.DecodeError:
+#         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+#
+# # 코멘트 달기
+# @app.route('/comment', methods=['POST'])
+# def save_order():
+#     name_receive = request.form['name_give']
+#     comment_receive = request.form['comment_give']
+#
+#     doc = {
+#         'name': name_receive,
+#         'comment': comment_receive,
+#     }
+#
+#     print(doc)
+#     db.commetndb.insert_one(doc) #db 확인
+#     return jsonify({'msg': '등록 완료'})
+#
+# # comment 목록보기(Read) API
+# @app.route('/comment', methods=['GET'])
+# def view_orders():
+#     commnetList = list(db.commetndb.find({},{'_id':False})) #db 확인
+#     return jsonify({'commentList':commnetList})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
