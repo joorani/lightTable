@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -77,9 +74,8 @@
         }
 
         .title > img {
-            width: 900px;
             height: 500px;
-            border: 1px solid black;
+            {#border: 1px solid black;#}
             margin: auto;
 
         }
@@ -119,7 +115,7 @@
             font-size: 25px;
         }
 
-        .recipe_order {
+        .recipe_step {
             width: 95%;
             border: 1px solid black;
             border-radius: 10px;
@@ -127,7 +123,7 @@
             margin: 20px auto;
         }
 
-        .recipe_order > p {
+        .recipe_step > p {
             font-size: 20px;
         }
 
@@ -147,37 +143,37 @@
 <div class="wrap">
     <div class="header">
         <div class="top">
-            <img src="/static/images/logo.png" alt="logo">
+            <img src="/static/logo1.png" alt="logo">
+
+            <!-- jinja이용해서 이름가져오기 -->
             <div>ㅇㅇ님 안녕하세요😃</div>
         </div>
     </div>
     <div class="detail_win">
         <div class="title">
-            <img src="{{recipe.image}}" alt="{{recipe.title}}">
-            <p>{{recipe.title}}</p>
+            <!--jinja로 title, img_url 가져오기-->
+            <img src="{{ recipeData.image }}" alt="img">
+            <p>{{ recipeData.title }}</p>
         </div>
         <hr>
         <div class="recipe">
-           <div class="ingredients_box">
+            <div class="ingredients_box">
                 <h3>재료 준비!</h3>
-                <ul class="ingredients">
-                    {% for ingredient in recipe.ingredients %}
-                        <li>{{ingredient}}</li>
-                    {% endfor %}
-                </ul>
+                <div class="ingredients">
+                    <div>{{ recipeData.ingredient }}</div>
+                </div>
             </div>
-             <ol class="recipe_order">
-                {% for step in recipe.steps %}
-                    <li>{{step}}</li>
-                {% endfor %}
-            </ol>
+            <div class="recipe_step">
+                <div>{{ recipeData.step }}</div>
+            </div>
         </div>
     </div>
     <div class="comment_box">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="comment"
                    aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button onclick="inputComment()" class="btn btn-outline-secondary" type="button" id="button-addon2">등록</button>
+            <button onclick="inputComment()" class="btn btn-outline-secondary" type="button" id="button-addon2">등록
+            </button>
         </div>
         <div class="comment">
             <table class="table">
@@ -195,75 +191,45 @@
         comment_listing();
     });
 
-    // function getTitle() {
-    //     let titleHref = window.location.href;
-    //     let getTitle = titleHref.split('=');	//getarea를 '='를 기준으로 두 배열 요소로 분리
-    //     let titleData = getTitle[1];	//분리한 배열 중 두번째 요소 변수에 넣기
-    //     // console.log(getTitle)
-    //     // console.log(titleData)
-    //     let tileAddress = decodeURI(titleData)
-    //     detailWin(tileAddress)
-    // }
-
-    // function detailWin(data) {
-    //     $('#ct1').empty();
-    //     $.ajax({
-    //         type: "GET",
-    //         url: "/detail",
-    //         data: {"title": data}, //수정필요
-    //         success: function (response) {
-    //             let detailWin = response['getdetailWin']
-    //             // console.log(detailWin)
-    //             let img = detailWin['img_url']
-    //             let title = detailWin['title']
-    //
-    //             let temp_html = ``
-    //
-    //             $('#ct1').append(temp_html)
-    //
-    //         }
-    //     })
-    //
-    // }
-
-    //코멘트 리스팅 : name받아오기?????
-    function comment_listing() {
-        $.ajax({
-            type: "GET",
-            url: "/comment",
-            data: {},
-            success: function (response) {
-                let commnetList = response["commnetList"];
-
-                for (let i = 0; i < commnetList.length; i++) {
-                    let name = commnetList[i]['name']
-                    let commnet = commnetList[i]['comment']
-
-                    let temp_html = `<tr>
-                                        <th scope="row">${name}</th>
-                                        <td>${commnet}</td>
-                                   </tr>`
-
-                    $('#val').append(temp_html)
-                }
-            }
-        })
-    }
-
-    // 코멘트 입력하기 : name받아오기?????
-    function inputComment() {
-        let ea = $('#comment').val()
-        // 코멘트 API 연결
-        $.ajax({
-            type: "POST",
-            url: "/commet",
-            data: {commnet_give: commnet},
-            success: function (response) { // 성공하면
-                alert(response["msg"]);
-                window.location.reload()
-            }
-        })
-    }
+    {#//코멘트 리스팅 : name받아오기?????#}
+    {#function comment_listing() {#}
+    {#    $.ajax({#}
+    {#        type: "GET",#}
+    {#        url: "/comment",#}
+    {#        data: {},#}
+    {#        success: function (response) {#}
+    {#            let commnetList = response["commnetList"];#}
+    {##}
+    {#            for (let i = 0; i < commnetList.length; i++) {#}
+    {#                let name = commnetList[i]['name']#}
+    {#                let commnet = commnetList[i]['comment']#}
+    {##}
+    {#                let temp_html = `<tr>#}
+    {#                                    <th scope="row">${name}</th>#}
+    {#                                    <td>${commnet}</td>#}
+    {#                               </tr>`#}
+    {##}
+    {#                $('#val').append(temp_html)#}
+    {#            }#}
+    {#        }#}
+    {#    })#}
+    {#}#}
+        {##}
+        {#// 코멘트 입력하기 : name받아오기?????#}
+        {#function inputComment() {#}
+        {#    let ea = $('#comment').val()#}
+        {#    // 코멘트 API 연결#}
+        {#    $.ajax({#}
+        {#        type: "POST",#}
+        {#        url: "/commet",#}
+        {#        data: {commnet_give: commnet},#}
+        {#        success: function (response) { // 성공하면#}
+        {#            alert(response["msg"]);#}
+        {#            window.location.reload()#}
+        {#        }#}
+        {#    })#}
+        {
+    #}#}
 
 </script>
 </body>

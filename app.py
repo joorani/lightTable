@@ -1,5 +1,6 @@
 
 import requests
+from bson import ObjectId
 
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from bson.json_util import loads, dumps
@@ -92,6 +93,16 @@ def show_card():
     keywordData = request.args.get('type')
     menu_card = list(db.recipe.find({'type': {'$regex': keywordData}}))
     return jsonify({'menu_card': dumps(menu_card)})
+
+
+# 상세페이지
+#상세페이지 요소 삽입(jinja2)
+@app.route('/detail')
+def title():
+    id_address = request.args.get('id') #url에서 파라미터값 가져오기
+    recipeData = db.recipe.find_one({'_id':ObjectId(id_address)})
+    # print(recipeData)
+    return render_template("detail.html", recipeData=recipeData)
 
 
 ## 상세페이지(리뷰도 보여줘야되기 때문에 로그인한 사람만 볼 수 있음)
