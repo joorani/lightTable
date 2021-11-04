@@ -79,12 +79,17 @@ hr {
 }
 
 .ingredients_box > .ingredients {
+    width: 80%;
     display: flex;
-    justify-content: space-around;
-    margin: 30px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 30px auto;
 }
 
 .ingredients_box > .ingredients > li {
+    list-style: none;
+    padding: 0 20px 10px 20px;
     font-size: 18px;
 }
 
