@@ -64,7 +64,7 @@ li {
     overflow: hidden;
 }
 .card-box a:hover {
-    color: inherit;
+    color: #28a745;
     font-weight: bold;
 }
 .card-box a .card-image {
@@ -83,7 +83,7 @@ li {
     width: calc((1500px / 4) * 0.9);
     height: calc((1500px / 4) * 0.25);
     margin: auto;
-    /*padding-top: 10px;*/
+    padding-top: 5px;
     font-size: 18px;
     text-align: center;
 }

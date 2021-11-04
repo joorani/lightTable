@@ -29,12 +29,12 @@
 </head>
 <body>
 <div class="wrap">
-    <div class="header">
+    <header class="header">
         <div class="top">
             <img src="/static/images/logo.png" alt="logo">
-            <div>{{ user.username }}님 안녕하세요😃</div>
+            <p>{{ user.username }}님 안녕하세요😃</p>
         </div>
-    </div>
+    </header>
     <div class="banner">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -50,8 +50,8 @@
             </div>
         </div>
     </div>
-    <div class="main">
-        <div class="tag">
+    <section class="main">
+        <nav class="tag">
             <div class="group tag1">
                 <button onclick="keyword('소고기')" type="button" class="btn btn-success">소고기</button>
                 <button onclick="keyword('돼지고기')" type="button" class="btn btn-success">돼지고기</button>
@@ -72,7 +72,7 @@
                 <button onclick="keyword('곡류')" type="button" class="btn btn-success">곡류</button>
                 <button onclick="keyword('기타')" type="button" class="btn btn-success">기타</button>
             </div>
-        </div>
+        </nav>
         <ul id="cards">
             {% for recipe in recipe_list %}
             <li class="card-box">
@@ -85,7 +85,7 @@
             </li>
             {% endfor %}
         </ul>
-    </div>
+    </section>
 </div>
 
 <script>
