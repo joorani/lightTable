@@ -30,7 +30,6 @@
 		//아이디 중복확인
 		function check_dup() {
 			let userid = $("#userid").val()
-			console.log(userid)
 			if (userid == "") {
 				$("#help-id").text("아이디를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
 				$("#userid").focus()
@@ -135,7 +134,6 @@
 					password_give: password
 				},
 				success: function (response) {
-                    console.log(response)
 					if (response['result'] == 'success') {
 						$.cookie('mytoken', response['token'], {path: '/main'});
 						window.location.replace("/main")

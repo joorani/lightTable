@@ -1,0 +1,110 @@
+       * {
+            font-family: 'Hahmlet', serif;
+        }
+
+        /*header*/
+        .wrap {
+            width: 1500px;
+            margin: auto;
+        }
+
+        .header {
+            margin-top: 10px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .top > div {
+            margin: auto 20px;
+            font-size: 30px;
+        }
+
+        .top > img {
+            width: 340px;
+            height: 150px;
+            display: flex;
+            justify-content: left;
+        }
+
+        /*상세페이지*/
+        .detail_win {
+            background-color: #efffdf;
+            /*border: black 1px solid;*/
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .title {
+            width: 95%;
+            height: 600px;
+            /*border: black 1px solid;*/
+            margin: 30px auto 10px;
+            display: flex;
+            flex-direction: column
+        }
+
+        .title > img {
+            height: 500px;
+            {#border: 1px solid black;#}
+            margin: auto;
+
+        }
+
+        .title > p {
+            display: block;
+            font-size: 40px;
+            margin: auto;
+        }
+
+        hr {
+            border: 1px solid green;
+            width: 95%;
+        }
+
+        .ingredients_box {
+            width: 95%;
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            margin: auto;;
+        }
+
+        .ingredients_box > h3 {
+            display: block;
+            width: 200px;
+            margin: auto;
+        }
+
+        .ingredients_box > .ingredients {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px;
+        }
+
+        .ingredients_box > .ingredients > div {
+            font-size: 25px;
+        }
+
+        .recipe_step {
+            width: 95%;
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 50px;
+            margin: 20px auto;
+        }
+
+        .recipe_step > p {
+            font-size: 20px;
+        }
+
+        /*코멘트 박스*/
+        .comment_box {
+            background-color: #efffdf;
+            /*border: black 1px solid;*/
+            border-radius: 20px;
+            margin-top: 20px;
+            padding: 30px;
+        }

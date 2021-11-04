@@ -76,7 +76,7 @@
         <div class="cards" id="cards">
                         <div class="card" style="width: 18rem;">
                             {% for recipe in recipe_list %}
-                                <a href="#"><img src="{{ recipe.image }}" class="card-img-top" alt="..."></a>
+                                <a href="/detail?id={{ recipe._id }}"><img src="{{ recipe.image }}" class="card-img-top" alt="..."></a>
                                 <div class="card-body">
                                     <p class="card-text">{{ recipe.title }}</p>
                                 </div>
@@ -110,7 +110,7 @@
                         let title = keyword[i]['title']
                         let id = keyword[i]['_id']['$oid']
                         let temp_html = `<div class="card" style="width: 18rem;">
-                                        <a href="/detail?id=${id}"><img src="${img}" class="card-img-top" alt="..."></a>
+                                        <<a href="/detail?id=${id}"><img src="${img}" class="card-img-top" alt="..."></a>
                                         <div class="card-body">
                                             <p class="card-text" id="tile_name">${title}</p>
                                         </div>

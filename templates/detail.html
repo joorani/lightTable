@@ -23,214 +23,64 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Hahmlet:wght@400;700;900&family=Poor+Story&display=swap"
           rel="stylesheet">
-
-    <style>
-        * {
-            font-family: 'Hahmlet', serif;
-        }
-
-        /*header*/
-        .wrap {
-            width: 1500px;
-            margin: auto;
-        }
-
-        .header {
-            margin-top: 10px;
-        }
-
-        .top {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .top > div {
-            margin: auto 20px;
-            font-size: 30px;
-        }
-
-        .top > img {
-            width: 340px;
-            height: 150px;
-            display: flex;
-            justify-content: left;
-        }
-
-        /*상세페이지*/
-        .detail_win {
-            background-color: #efffdf;
-            /*border: black 1px solid;*/
-            border-radius: 20px;
-            padding: 30px;
-        }
-
-        .title {
-            width: 95%;
-            height: 600px;
-            /*border: black 1px solid;*/
-            margin: 30px auto 10px;
-            display: flex;
-            flex-direction: column
-        }
-
-        .title > img {
-            height: 500px;
-            {#border: 1px solid black;#}
-            margin: auto;
-
-        }
-
-        .title > p {
-            display: block;
-            font-size: 40px;
-            margin: auto;
-        }
-
-        hr {
-            border: 1px solid green;
-            width: 95%;
-        }
-
-        .ingredients_box {
-            width: 95%;
-            border: 1px solid black;
-            border-radius: 10px;
-            padding: 20px;
-            margin: auto;;
-        }
-
-        .ingredients_box > h3 {
-            display: block;
-            width: 200px;
-            margin: auto;
-        }
-
-        .ingredients_box > .ingredients {
-            display: flex;
-            justify-content: space-around;
-            margin: 30px;
-        }
-
-        .ingredients_box > .ingredients > div {
-            font-size: 25px;
-        }
-
-        .recipe_step {
-            width: 95%;
-            border: 1px solid black;
-            border-radius: 10px;
-            padding: 50px;
-            margin: 20px auto;
-        }
-
-        .recipe_step > p {
-            font-size: 20px;
-        }
-
-        /*코멘트 박스*/
-        .comment_box {
-            background-color: #efffdf;
-            /*border: black 1px solid;*/
-            border-radius: 20px;
-            margin-top: 20px;
-            padding: 30px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="../static/css/detail.css">
+    <script>
+        // 댓글추가
+         function post() {
+                let comment = $("#textarea-post").val()
+                let today = new Date().toISOString()
+                $.ajax({
+                    type: "POST",
+                    url: '/posting',
+                    data: {
+                        comment_give: comment,
+                        date_give: today,
+                        title_id_give: {{ recipe._id }}
+                    },
+                    success: function (response) {
+                        console.log(response['msg'])
+                        {#$("#modal-post").removeClass("is-active")#}
+                        {#window.location.reload()#}
+                    }
+                })
+            }
+    </script>
 </head>
 
 <body>
 <div class="wrap">
     <div class="header">
         <div class="top">
-            <img src="/static/logo1.png" alt="logo">
-
-            <!-- jinja이용해서 이름가져오기 -->
-            <div>ㅇㅇ님 안녕하세요😃</div>
+            <img src="/static/images/logo.png" alt="logo">
+            <div>{{ user.username }}님 안녕하세요😃</div>
         </div>
     </div>
     <div class="detail_win">
         <div class="title">
-            <!--jinja로 title, img_url 가져오기-->
-            <img src="{{ recipeData.image }}" alt="img">
-            <p>{{ recipeData.title }}</p>
+            <img src="{{ recipe.image }}">
+            <p>{{ recipe.title }}</p>
         </div>
         <hr>
         <div class="recipe">
             <div class="ingredients_box">
                 <h3>재료 준비!</h3>
-                <div class="ingredients">
-                    <div>{{ recipeData.ingredient }}</div>
-                </div>
+                <ul class="ingredients">
+                    <li>{{ recipe.ingredient }}</li>
+                </ul>
             </div>
-            <div class="recipe_step">
-                <div>{{ recipeData.step }}</div>
-            </div>
+            <ol class="recipe_step">
+                <li>{{ recipe.step }}</li>
+            </ol>
         </div>
     </div>
+{#    ---------------- 댓글----------------- #}
     <div class="comment_box">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="comment"
                    aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button onclick="inputComment()" class="btn btn-outline-secondary" type="button" id="button-addon2">등록
+            <button onclick="post()" class="btn btn-outline-secondary" type="button" id="button-addon2">등록
             </button>
         </div>
-        <div class="comment">
-            <table class="table">
-                <tbody id="val">
-                </tbody>
-            </table>
-        </div>
-
     </div>
-
-</div>
-<script>
-    $(document).ready(function () {
-        // getTitle()
-        comment_listing();
-    });
-
-    {#//코멘트 리스팅 : name받아오기?????#}
-    {#function comment_listing() {#}
-    {#    $.ajax({#}
-    {#        type: "GET",#}
-    {#        url: "/comment",#}
-    {#        data: {},#}
-    {#        success: function (response) {#}
-    {#            let commnetList = response["commnetList"];#}
-    {##}
-    {#            for (let i = 0; i < commnetList.length; i++) {#}
-    {#                let name = commnetList[i]['name']#}
-    {#                let commnet = commnetList[i]['comment']#}
-    {##}
-    {#                let temp_html = `<tr>#}
-    {#                                    <th scope="row">${name}</th>#}
-    {#                                    <td>${commnet}</td>#}
-    {#                               </tr>`#}
-    {##}
-    {#                $('#val').append(temp_html)#}
-    {#            }#}
-    {#        }#}
-    {#    })#}
-    {#}#}
-        {##}
-        {#// 코멘트 입력하기 : name받아오기?????#}
-        {#function inputComment() {#}
-        {#    let ea = $('#comment').val()#}
-        {#    // 코멘트 API 연결#}
-        {#    $.ajax({#}
-        {#        type: "POST",#}
-        {#        url: "/commet",#}
-        {#        data: {commnet_give: commnet},#}
-        {#        success: function (response) { // 성공하면#}
-        {#            alert(response["msg"]);#}
-        {#            window.location.reload()#}
-        {#        }#}
-        {#    })#}
-        {
-    #}#}
-
-</script>
 </body>
 </html>

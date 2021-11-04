@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 # git에 올라가면 안되는 내용!
 # app.config["TEMPLATES_AUTO_RELOAD"] = True
-# app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
+# app.config['UPLOAD_ FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'lightTable'
 
@@ -55,7 +55,7 @@ def sign_in():
     if result is not None:
         payload = {
          'id': userid_receive,
-         'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
+         'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24 * 3)  # 로그인 24시간 유지
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
@@ -70,79 +70,84 @@ def login():
     msg = request.args.get("msg")
     return render_template('login.html', msg=msg)
 
+# 로그인 성공시 메인페이지로 이동.
 @app.route('/main')
 def show_menu():
     token_receive = request.cookies.get('mytoken')
-
+    print(token_receive)
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         userid = (payload["id"])
-        user_info = db.users.find_one({"userid": userid}, {"_id": 0})
-        recipe_list = list(db.recipe.find({}, {'_id': 0}))
+        user_info = db.users.find_one({"userid": userid})
+        recipe_list = list(db.recipe.find({}))
         return render_template('main.html', user = user_info, recipe_list = recipe_list)
 
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
-
-# 메인페이지
-# db에서 재료 가져오기/ 키워트 클릭 시 카드출력
+# 메인 페이지 재료 클릭시 재료별 카드출력
 @app.route('/main/type', methods=['GET'])
 def show_card():
-    keywordData = request.args.get('type')
-    menu_card = list(db.recipe.find({'type': {'$regex': keywordData}}))
+    keyword = request.args.get('type')
+    menu_card = list(db.recipe.find({'type': {'$regex': keyword}}))
     return jsonify({'menu_card': dumps(menu_card)})
 
-
-# 상세페이지
-#상세페이지 요소 삽입(jinja2)
 @app.route('/detail')
 def title():
+    token_receive = request.cookies.get('mytoken')
+    print(token_receive)
     id_address = request.args.get('id') #url에서 파라미터값 가져오기
     recipeData = db.recipe.find_one({'_id':ObjectId(id_address)})
+    user_info = db.users.find_one({'userid': id_address}, {'_id': 0})
     # print(recipeData)
-    return render_template("detail.html", recipeData=recipeData)
+    return render_template("detail.html", user = user_info, recipe=recipeData)
 
-
-## 상세페이지(리뷰도 보여줘야되기 때문에 로그인한 사람만 볼 수 있음)
-# @app.route("/detail/<recipe_title>")
-# def detail(recipe_title):
+## 상세페이지
+# @app.route("/detail/<title>")
+# def show_recipe(title):
+#     token_receive = request.cookies.get('mytoken')
+#
+#     id_address = request.args.get('id')  # url에서 파라미터값 가져오기
+#     try:
+#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+#         userid = (payload["id"])
+#
+#         picked_recipe = db.recipe.find_one({'_id': ObjectId(id_address)}, {'_id': 0})
+#         user_info = db.users.find_one({'userid': userid}, {'_id': 0})
+#         comments = list(db.posts.find({'title_id': ObjectId(id_address)}))
+#
+#         return render_template("detail.html", user=user_info, recipe=picked_recipe, comments=comments)
+#     except jwt.ExpiredSignatureError:
+#         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+#     except jwt.exceptions.DecodeError:
+#         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+# 댓글 저장
+# @app.route('/posting', methods=['POST'])
+# def posting(recipe_title):
 #     token_receive = request.cookies.get('mytoken')
 #     try:
 #         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 #         userid = (payload["id"])
 #
-#         detail_recipe = db.recipe.find_one({'title': recipe_title}, {'_id': 0})
+#         comment_receive = request.form["comment_give"]
+#         date_receive = request.form["date_give"]
+#         title_id_receive = request.form["title_id_give"]
 #
-#         pickedList = db.users.find_one({'userid': userid}, {'_id': 0})
-#         reviews = list(db.comments.find({'title': recipe_title}))
-#         return render_template("detail.html", recipe=detail_recipe, comments=pickedList)
+#         doc = {
+#             "userid": userid,
+#             "title_id": title_id_receive,
+#             "comment": comment_receive,
+#             "date": date_receive,
+#         }
+#
+#         db.posts.insert_one(doc)
+#         return jsonify({"result": "success", 'msg': '포스팅 성공'})
 #     except jwt.ExpiredSignatureError:
 #         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
 #     except jwt.exceptions.DecodeError:
 #         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
-#
-# # 코멘트 달기
-# @app.route('/comment', methods=['POST'])
-# def save_order():
-#     name_receive = request.form['name_give']
-#     comment_receive = request.form['comment_give']
-#
-#     doc = {
-#         'name': name_receive,
-#         'comment': comment_receive,
-#     }
-#
-#     print(doc)
-#     db.commetndb.insert_one(doc) #db 확인
-#     return jsonify({'msg': '등록 완료'})
-#
-# # comment 목록보기(Read) API
-# @app.route('/comment', methods=['GET'])
-# def view_orders():
-#     commnetList = list(db.commetndb.find({},{'_id':False})) #db 확인
-#     return jsonify({'commentList':commnetList})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
