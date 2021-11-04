@@ -150,8 +150,6 @@ def posting():
         print(type(date_receive))
         doc = {
             "username": user_info["username"],
-            "profile_name": user_info["profile_name"],
-            "profile_pic_real": user_info["profile_pic_real"],
             "comment": comment_receive,
             "date": date_receive
         }
