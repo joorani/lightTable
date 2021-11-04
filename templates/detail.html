@@ -333,12 +333,14 @@
             function post() {
                 let comment = $("#textarea-post").val()
                 let today = new Date().toISOString()
+                let title = $('#recipe_title").val()
                 $.ajax({
                     type: "POST",
                     url: "/posting",
                     data: {
                         comment_give: comment,
-                        date_give: today
+                        date_give: today,
+                        title_give: title
                     },
                     success: function (response) {
                         $("#modal-post").removeClass("is-active")
