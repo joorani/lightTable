@@ -13,8 +13,8 @@ from datetime import datetime, timedelta
 
 app = Flask(__name__)
 # git에 올라가면 안되는 내용!
-# app.config["TEMPLATES_AUTO_RELOAD"] = True
-# app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'lightTable'
 
@@ -105,44 +105,30 @@ def title():
     return render_template("detail.html", recipeData=recipeData)
 
 
-## 상세페이지(리뷰도 보여줘야되기 때문에 로그인한 사람만 볼 수 있음)
-# @app.route("/detail/<recipe_title>")
-# def detail(recipe_title):
-#     token_receive = request.cookies.get('mytoken')
-#     try:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#         userid = (payload["id"])
-#
-#         detail_recipe = db.recipe.find_one({'title': recipe_title}, {'_id': 0})
-#
-#         pickedList = db.users.find_one({'userid': userid}, {'_id': 0})
-#         reviews = list(db.comments.find({'title': recipe_title}))
-#         return render_template("detail.html", recipe=detail_recipe, comments=pickedList)
-#     except jwt.ExpiredSignatureError:
-#         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
-#     except jwt.exceptions.DecodeError:
-#         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
-#
-# # 코멘트 달기
-# @app.route('/comment', methods=['POST'])
-# def save_order():
-#     name_receive = request.form['name_give']
-#     comment_receive = request.form['comment_give']
-#
-#     doc = {
-#         'name': name_receive,
-#         'comment': comment_receive,
-#     }
-#
-#     print(doc)
-#     db.commetndb.insert_one(doc) #db 확인
-#     return jsonify({'msg': '등록 완료'})
-#
-# # comment 목록보기(Read) API
-# @app.route('/comment', methods=['GET'])
-# def view_orders():
-#     commnetList = list(db.commetndb.find({},{'_id':False})) #db 확인
-#     return jsonify({'commentList':commnetList})
+@app.route('/comment', methods=['POST'])
+def write_comment():
+    comment_receive = request.form['comment_give']
+    title_give = request.form['title_give']
+    print(comment_receive)
+    print(title_give)
+    doc = {
+        'comment':comment_receive,
+        'title':title_give
+    }
+
+    db.comments.insert_one(doc)
+
+    return jsonify({'msg': '저장 완료!'})
+
+
+@app.route('/comment_show', methods=['POST'])
+def showcomment():
+    title_give = request.form['title_give']
+    print(title_give)
+    comments = list(db.comments.find({'title':title_give}, {'_id': False}))
+    print(comments)
+    return jsonify({'comment': comments})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

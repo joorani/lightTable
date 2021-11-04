@@ -153,7 +153,7 @@
         <div class="title">
             <!--jinja로 title, img_url 가져오기-->
             <img src="{{ recipeData.image }}" alt="img">
-            <p>{{ recipeData.title }}</p>
+            <p id="title_give">{{ recipeData.title }}</p>
         </div>
         <hr>
         <div class="recipe">
@@ -170,12 +170,12 @@
     </div>
     <div class="comment_box">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="comment"
+            <input type="text" class="form-control" id="comment" placeholder="comment"
                    aria-label="Recipient's username" aria-describedby="button-addon2">
             <button onclick="inputComment()" class="btn btn-outline-secondary" type="button" id="button-addon2">등록
             </button>
         </div>
-        <div class="comment">
+        <div id="comments-box">
             <table class="table">
                 <tbody id="val">
                 </tbody>
@@ -190,6 +190,53 @@
         // getTitle()
         comment_listing();
     });
+
+    	$(document).ready(function () {
+                showcomment();
+            });
+
+            function inputComment() {
+                let comment = $('#comment').val()
+                let title_give = $('#title_give').text()
+
+                $.ajax({
+                    type: "POST",
+                    url: "/comment",
+                    data: {
+                        comment_give:comment,
+                        title_give:title_give
+                    },
+                    success: function (response) {
+                        alert(response["msg"]);
+                        window.location.reload();
+                    }
+                })
+            }
+
+            function showcomment() {
+                let title_give = $('#title_give').text()
+
+                $.ajax({
+                    type: "POST",
+                    url: "/comment_show",
+                    data: {
+                        title_give:title_give
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        let comments = response['comment']
+                        console.log(comments)
+                        for (let i = 0; i < comments.length; i++) {
+                            let comment = comments[i]['comment']
+
+                            let temp_html = `<tr>
+                                                <td>${comment}</td>
+                                            </tr>`
+                            $('#comments-box').append(temp_html)
+                        }
+                    }
+                })
+            }
 
     {#//코멘트 리스팅 : name받아오기?????#}
     {#function comment_listing() {#}
@@ -213,7 +260,7 @@
     {#            }#}
     {#        }#}
     {#    })#}
-    {#}#}
+
         {##}
         {#// 코멘트 입력하기 : name받아오기?????#}
         {#function inputComment() {#}
@@ -228,8 +275,7 @@
         {#            window.location.reload()#}
         {#        }#}
         {#    })#}
-        {
-    #}#}
+
 
 </script>
 </body>
