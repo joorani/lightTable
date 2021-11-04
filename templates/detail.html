@@ -25,22 +25,49 @@
           rel="stylesheet">
     <link rel="stylesheet" href="../static/css/detail.css">
     <script>
-        // 댓글추가
-         function post() {
-                let comment = $("#textarea-post").val()
-                let today = new Date().toISOString()
+    	$(document).ready(function () {
+                showcomment();
+            });
+
+            function inputComment() {
+                let comment = $('#comment').val()
+                let title_give = $('#title_give').text()
+
                 $.ajax({
                     type: "POST",
-                    url: '/posting',
+                    url: "/comment",
                     data: {
-                        comment_give: comment,
-                        date_give: today,
-                        title_id_give: {{ recipe._id }}
+                        comment_give:comment,
+                        title_give:title_give
                     },
                     success: function (response) {
-                        console.log(response['msg'])
-                        {#$("#modal-post").removeClass("is-active")#}
-                        {#window.location.reload()#}
+                        alert(response["msg"]);
+                        window.location.reload();
+                    }
+                })
+            }
+
+            function showcomment() {
+                let title_give = $('#title_give').text()
+
+                $.ajax({
+                    type: "POST",
+                    url: "/comment_show",
+                    data: {
+                        title_give:title_give
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        let comments = response['comment']
+                        console.log(comments)
+                        for (let i = 0; i < comments.length; i++) {
+                            let comment = comments[i]['comment']
+
+                            let temp_html = `<tr>
+                                                <td>${comment}</td>
+                                            </tr>`
+                            $('#comments-box').append(temp_html)
+                        }
                     }
                 })
             }
@@ -77,14 +104,21 @@
             </ol>
         </div>
     </div>
-{#    ---------------- 댓글----------------- #}
+    {#    ---------------- 댓글----------------- #}
     <div class="comment_box">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="comment"
+            <input type="text" class="form-control" id="comment" placeholder="comment"
                    aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button onclick="post()" class="btn btn-outline-secondary" type="button" id="button-addon2">등록
+            <button onclick="inputComment()" class="btn btn-outline-secondary" type="button" id="button-addon2">등록
             </button>
         </div>
+        <div id="comments-box">
+            <table class="table">
+                <tbody id="val">
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
 </body>
 </html>
