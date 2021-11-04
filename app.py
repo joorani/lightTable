@@ -18,7 +18,7 @@ app = Flask(__name__)
 
 SECRET_KEY = 'lightTable'
 
-client = MongoClient('3.35.48.69', 27017, username="light", password="table")
+client = MongoClient('3.35.47.11', 27017, username="light", password="table")
 db = client.collections
 
 # 회원가입
