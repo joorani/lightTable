@@ -29,10 +29,11 @@
     justify-content: left;
     cursor: pointer;
 }
-
+.content-container {
+  background-color: #efffdf;
+}
 /*상세페이지*/
 .detail_win {
-    background-color: #efffdf;
     /*border: black 1px solid;*/
     border-radius: 20px;
     padding: 30px;
@@ -111,6 +112,17 @@ hr {
     background-color: #efffdf;
     /*border: black 1px solid;*/
     border-radius: 20px;
-    margin-top: 20px;
-    padding: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+#input-post {
+    width: 80%;
+}
+. comment-content > span{
+    line-height: 20px;
+vertical-align: middle;
+}
+
+.material-icons {
+    font-size: 30px;
 }

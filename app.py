@@ -96,7 +96,6 @@ def show_card():
 @app.route('/detail')
 def title():
     token_receive = request.cookies.get('mytoken')
-    print(token_receive)
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         userid = (payload["id"])
@@ -127,7 +126,6 @@ def posting():
         user_info = db.users.find_one({"userid": userid})
         print(user_info,"유저인포")
         doc = {
-            "userid": user_info["userid"],
             'user_name':user_info['username'],
             "comment": comment_receive,
             "date": date_receive,
