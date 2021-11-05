@@ -25,52 +25,71 @@
           rel="stylesheet">
     <link rel="stylesheet" href="../static/css/detail.css">
     <script>
-    	$(document).ready(function () {
-                showcomment();
-            });
-
-            function inputComment() {
-                let comment = $('#comment').val()
+                function post() {
+                let comment = $("#textarea-post").val()
+                let today = new Date().toISOString()
                 let title_give = $('#title_give').text()
 
                 $.ajax({
                     type: "POST",
-                    url: "/comment",
+                    url: '/posting',
                     data: {
-                        comment_give:comment,
+                        comment_give: comment,
+                        date_give: today,
                         title_give:title_give
                     },
                     success: function (response) {
                         alert(response["msg"]);
-                        window.location.reload();
+                        $("#modal-post").removeClass("is-active")
+                        window.location.reload()
                     }
                 })
             }
 
-            function showcomment() {
-                let title_give = $('#title_give').text()
 
-                $.ajax({
-                    type: "POST",
-                    url: "/comment_show",
-                    data: {
-                        title_give:title_give
-                    },
-                    success: function (response) {
-                        console.log(response)
-                        let comments = response['comment']
-                        console.log(comments)
-                        for (let i = 0; i < comments.length; i++) {
-                            let comment = comments[i]['comment']
+    function get_posts() {
+        $("#post-box").empty()
+        let title_give = $('#title_give').text()
+        $.ajax({
+            type: "POST",
+            url: "/get_posts",
+            data: {
+                title_give:title_give
+            },
+            success: function (response) {
+                console.log(response)
+                if (response["result"] == "success") {
+                    let posts = response["posts"]
+                    for (let i = 0; i < posts.length; i++) {
+                        let comment = posts[i]['comment']
+                        let userid = posts[i]['userid']
+                        let username = posts[i]['user_name']
 
-                            let temp_html = `<tr>
-                                                <td>${comment}</td>
-                                            </tr>`
-                            $('#comments-box').append(temp_html)
-                        }
+                        let html_temp = `<div class="box" id="${post["_id"]}">
+                                        <article class="media">
+                                            <div class="media-content">
+                                                <div class="content">
+                                                    <p>
+                                                         <strong>User name:${username}</strong>
+                                                          <p><small>User id:${userid}</small></p>
+                                                        <strong><p>${comment}</p></strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>`
+                        $("#post-box").append(html_temp)
                     }
-                })
+                }
             }
+        })
+    }
+
+
+            $(document).ready(function () {
+                get_posts()
+            })
+
     </script>
 </head>
 
