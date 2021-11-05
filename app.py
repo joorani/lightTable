@@ -12,9 +12,8 @@ from pymongo import MongoClient
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
-# git에 올라가면 안되는 내용!
-# app.config["TEMPLATES_AUTO_RELOAD"] = True
-# app.config['UPLOAD_ FOLDER'] = "./static/profile_pics"
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config['UPLOAD_ FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'lightTable'
 

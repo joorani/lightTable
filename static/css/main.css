@@ -66,6 +66,8 @@ li {
 .card-box a:hover {
     color: #28a745;
     font-weight: bold;
+    transform: translateY(-0.5rem) scale(1.0125);
+    box-shadow: 0 0.5em 3rem -1rem rgba(0, 0, 0, 0.5);
 }
 .card-box a .card-image {
     width: calc((1500px / 4) * 0.85);

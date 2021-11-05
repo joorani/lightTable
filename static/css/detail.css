@@ -118,11 +118,13 @@ hr {
 #input-post {
     width: 80%;
 }
-. comment-content > span{
-    line-height: 20px;
-vertical-align: middle;
+#username {
+    font-size: 20px;
+    margin-right:30px;
 }
-
+.comment-contents {
+    font-size: 20px;
+}
 .material-icons {
     font-size: 30px;
 }
