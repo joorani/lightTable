@@ -25,6 +25,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Hahmlet:wght@400;700;900&family=Poor+Story&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="../static/css/main.css">
+    <!-- 아이콘 -->
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <!-- GSAP & ScrollToPlugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.0/gsap.min.js"
+            integrity="sha512-2fk3Q4NXPYAqIha0glLZ2nluueK43aNoxvijPf53+DgL7UW9mkN+uXc1aEmnZdkkZVvtJZltpRt+JqTWc3TS3Q=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.0/ScrollToPlugin.min.js" integrity="sha512-pejU3r+QqP9FinPBc7gRHMjcI5MUoiGSyiJNHuFKJOAls/cucff3Z931FwmB6pMRkFxBnq8DGEpmn4xjBqpPpA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--rodash.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
 </head>
 <body>
@@ -86,6 +96,9 @@
             {% endfor %}
         </ul>
     </section>
+    <div id="to-top">
+        <div class="material-icons">arrow_upward</div>
+    </div>
 </div>
 
 <script>
@@ -124,6 +137,30 @@
                 }
             })
         }
+
+        //상단으로 올라가는 아이콘
+        window.addEventListener('scroll', _.throttle(function () {
+            console.log(window.scrollY);
+            if (window.scrollY > 500) {
+                //버튼 보이기
+                gsap.to('#to-top', .2, {
+                    x: 0
+                });
+            } else {
+                //버튼 숨기기
+                gsap.to('#to-top', .2, {
+                    x: 100
+                });
+            }
+        }, 300));
+        // _.throttle(함수, 시간)
+
+        const toTopEl = document.querySelector('#to-top');
+        toTopEl.addEventListener('click', function () {
+            gsap.to(window, .7, {
+                scrollTo: 0
+            });
+        });
     </script>
 </body>
 </html>
