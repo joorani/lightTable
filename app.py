@@ -104,30 +104,43 @@ def title():
     # print(recipeData)
     return render_template("detail.html", recipeData=recipeData)
 
-
-@app.route('/comment', methods=['POST'])
-def write_comment():
-    comment_receive = request.form['comment_give']
+@app.route('/posting', methods=['POST'])
+def posting():
+    comment_receive = request.form["comment_give"]
+    print(comment_receive, "댓글")
+    date_receive = request.form["date_give"]
+    date_receive = repr(date_receive)
+    print(date_receive, "날짜")
     title_give = request.form['title_give']
-    print(comment_receive)
-    print(title_give)
-    doc = {
-        'comment':comment_receive,
-        'title':title_give
-    }
+    print(title_give, "타이틀")
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        userid = (payload["id"])
+        user_info = db.users.find_one({"userid": userid})
+        print(user_info,"유저인포")
+        doc = {
+            "userid": user_info["userid"],
+            'user_name':user_info['username'],
+            "comment": comment_receive,
+            "date": date_receive,
+            'title': title_give
+        }
+        db.posts.insert_one(doc)
+        return jsonify({"result": "success", 'msg': '포스팅 성공'})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("show_menu"))
 
-    db.comments.insert_one(doc)
-
-    return jsonify({'msg': '저장 완료!'})
-
-
-@app.route('/comment_show', methods=['POST'])
-def showcomment():
+# 댓글 클라이언트로 보내주기 / //////////////////////
+@app.route("/get_posts", methods=['POST'])
+def get_posts():
     title_give = request.form['title_give']
-    print(title_give)
-    comments = list(db.comments.find({'title':title_give}, {'_id': False}))
-    print(comments)
-    return jsonify({'comment': comments})
+    print(title_give+"두번째 타이틀")
+    posts = list(db.posts.find({'title':title_give}, {'_id': False}))
+    print(posts,"포스트리스트")
+
+    return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts})
+
 
 
 if __name__ == '__main__':
