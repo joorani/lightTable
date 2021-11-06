@@ -107,19 +107,20 @@
 
         // 캐러셀 조작
         $('.carousel').carousel({
-            interval: 2000,
-            wrap: true
+            interval: 2000, //시간
+            wrap: true //영구 반복
         })
 
-        {#//키워드 클릭 시 카드 띄우기#}
+        //키워드 클릭 시 카드 띄우기
         function keyword(data) {
             $('#cards').empty();
             $.ajax({
+                // main/type에서 recipe db가져오기
                 type: "GET",
                 url: "/main/type",
                 data: {"type": data},
                 success: function (response) {
-                    let keyword = JSON.parse(response['menu_card'])
+                    let keyword = JSON.parse(response['menu_card']) //dump()로 변환한 문자열을 JSON.parse로 가져오기
                     for (let i = 0; i < keyword.length; i++) {
                         let img = keyword[i]['image']
                         let title = keyword[i]['title']
@@ -139,11 +140,12 @@
         }
 
         //상단으로 올라가는 아이콘
-        window.addEventListener('scroll', _.throttle(function () {
-            console.log(window.scrollY);
+        window.addEventListener('scroll', _.throttle(function () { //스크롤 이벤트 rodash이용
+            //console.log(window.scrollY);
+            // _.throttle(함수, 시간)
             if (window.scrollY > 500) {
                 //버튼 보이기
-                gsap.to('#to-top', .2, {
+                gsap.to('#to-top', .2, { //애니메이션 라이브러리 gsap
                     x: 0
                 });
             } else {
@@ -153,7 +155,6 @@
                 });
             }
         }, 300));
-        // _.throttle(함수, 시간)
 
         const toTopEl = document.querySelector('#to-top');
         toTopEl.addEventListener('click', function () {
