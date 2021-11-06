@@ -47,23 +47,24 @@ def check_dup():
 def sign_in():
     userid_receive = request.form['userid_give']
     password_receive = request.form['password_give']
-
+    # 해시함수를 이용해서 비밀번호를 암호화된 문자열로 바꿔서 저장.
     pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     result = db.users.find_one({'userid': userid_receive, 'password': pw_hash})
-    # 유저 정보가 있으면
+    # 유저 정보가 있으면 유저 정보를 payload에 설정.
     if result is not None:
         payload = {
          'id': userid_receive,
          'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24 * 3)  # 로그인 24시간 유지
         }
+        # payload에 담긴 정보를 인코드해서 토큰 생성하여 클라이언트에 전달.
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
         return jsonify({'result': 'success', 'token': token})
-    # 찾지 못하면
+    # 유저 정보 찾지 못하면
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
-# 첫 페이지- 로그인
+# 첫 페이지- 로그인화면 렌더링
 @app.route('/')
 def login():
     msg = request.args.get("msg")
@@ -73,14 +74,14 @@ def login():
 @app.route('/main')
 def show_menu():
     token_receive = request.cookies.get('mytoken')
-    print(token_receive)
     try:
+        # 클라이언트에서 받은 토큰을 디코드해서 payload 설정.
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         userid = (payload["id"])
         user_info = db.users.find_one({"userid": userid})
         recipe_list = list(db.recipe.find({}))
         return render_template('main.html', user = user_info, recipe_list = recipe_list)
-
+    # 토큰 유효성검사
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:

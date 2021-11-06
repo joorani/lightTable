@@ -140,6 +140,7 @@
                 },
                 success: function (response) {
                     if (response['result'] == 'success') {
+                        //로그인 성공. 받은 토큰을 mytoken이라는 이름으로 쿠키에 저장.
                         $.cookie('mytoken', response['token'], {path: '/'});
                         window.location.replace("/main")
                     } else {
