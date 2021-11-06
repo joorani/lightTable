@@ -30,20 +30,25 @@
     <link rel="stylesheet" href="../static/css/detail.css">
     <script>
         function post() {
+            // id가 'title_give'인 tag에서 나온값을 title_give에 넣기
             let comment = $("#textarea-post").val()
+            //현재시각 today에 넣기
             let today = new Date().toISOString()
+            // id가 'title_give'인 tag에서 나온값을 title_give에 넣기
             let title_give = $('#title_give').text()
 
             $.ajax({
                 type: "POST",
                 url: '/posting',
                 data: {
+                    // comment, today, title_give 보내기
                     comment_give: comment,
                     date_give: today,
                     title_give: title_give
                 },
                 success: function (response) {
                     alert(response["msg"]);
+                    // 모달 입력창 닫기
                     $("#modal-post").removeClass("is-active")
                     window.location.reload()
                 }
@@ -52,17 +57,21 @@
 
         function get_posts() {
             $("#post-box").empty()
+            // id가 'title_give'인 tag에서 나온값을 title_give에 넣기
             let title_give = $('#title_give').text()
             $.ajax({
                 type: "POST",
                 url: "/get_posts",
                 data: {
+                    //title_give 보내주기
                     title_give: title_give
                 },
                 success: function (response) {
+                    // response 확인하기
                     console.log(response)
                     if (response["result"] == "success") {
                         let posts = response["posts"]
+                        //posts의 list안에있는 'comment', 'user_name'을 id가 'post-box'인 tag에 tag들을 append하기
                         for (let i = 0; i < posts.length; i++) {
                             let comment = posts[i]['comment']
                             let userid = posts[i]['userid']
@@ -86,11 +95,10 @@
             })
         }
 
-
+        // page열면 바로 get_posts() 실행
         $(document).ready(function () {
             get_posts()
         })
-
     </script>
 </head>
 
