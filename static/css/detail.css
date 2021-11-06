@@ -10,6 +10,8 @@
 
 .header {
     margin-bottom: 30px;
+    width: 90%;
+    margin: 0 auto;
 }
 
 .top {
@@ -29,14 +31,23 @@
     justify-content: left;
     cursor: pointer;
 }
+
 .content-container {
-  background-color: #efffdf;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    padding:  10px 50px;
+    background-color: #efffdf;
+
 }
+
 /*상세페이지*/
 .detail_win {
-    /*border: black 1px solid;*/
     border-radius: 20px;
     padding: 30px;
+    width: 70%;
 }
 
 .title {
@@ -49,6 +60,7 @@
 }
 
 .title > img {
+    width: 80%;
     height: 500px;
     #border: 1px solid black;
     margin: auto;
@@ -108,6 +120,12 @@ hr {
 }
 
 /*코멘트 박스*/
+.comment-section {
+    width: 30%;
+    height: 1000px;
+}
+
+
 .comment_box {
     background-color: #efffdf;
     /*border: black 1px solid;*/
@@ -116,7 +134,10 @@ hr {
     text-align: center;
 }
 #input-post {
-    width: 80%;
+    width: 100%;
+    height: 70px;
+    margin-bottom: 30px;
+    border-radius: 5px;
 }
 #username {
     font-size: 20px;

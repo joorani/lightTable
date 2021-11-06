@@ -50,7 +50,6 @@
             })
         }
 
-
         function get_posts() {
             $("#post-box").empty()
             let title_give = $('#title_give').text()
@@ -99,7 +98,7 @@
 <header class="header">
     <div class="top">
         <img src="/static/images/logo.png" alt="logo" onclick="window.location.href='/main'">
-        <div>{{ user.username }}님 안녕하세요😃</div>
+        <div class="username">{{ user.username }}님 안녕하세요😃</div>
     </div>
 </header>
 <div class="content-container">
@@ -125,8 +124,7 @@
             </ol>
         </div>
     </div>
-    {#    ---------------- 댓글----------------- #}
-    <section class="comment-section">
+    <div class="comment-section">
         <article class="media">
             <div class="media-content">
                 <div class="field comment_box">
@@ -134,6 +132,7 @@
                            onclick='$("#modal-post").addClass("is-active")'>
 
                 </div>
+                <div id="post-box" class="comment-container"></div>
             </div>
         </article>
         <div class="modal" id="modal-post">
@@ -169,11 +168,7 @@
             <button class="modal-close is-large" aria-label="close"
                     onclick='$("#modal-post").removeClass("is-active")'></button>
         </div>
-        <div id="post-box" class="container">
-            <div class="box">
-            </div>
-        </div>
-    </section>
+    </div>
 </div>
 </body>
 </html>

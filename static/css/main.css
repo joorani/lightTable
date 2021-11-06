@@ -59,10 +59,18 @@ li {
     width: calc((1500px / 4) - 15px);
     height: calc((1500px / 4) - 15px);
     margin: 0 15px 15px 0;
-    border: 1px solid #111;
+    padding: 0 15px;
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 0 3rem -1rem rgba(0,0,0,0.5);
+	transition: transform 0.1s ease-in-out, box-shadow 0.1s;
 }
+
+.card-box:hover {
+	transform: translateY(-0.5rem) scale(1.0125);
+	box-shadow: 0 0.5em 3rem -1rem rgba(0,0,0,0.5);
+}
+
 .card-box a:hover {
     color: #28a745;
     font-weight: bold;
