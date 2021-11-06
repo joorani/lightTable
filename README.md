@@ -1,6 +1,7 @@
 # 프로젝트 소개
 
 ## 가벼운 식탁
+
 다이어트 레시피 찾기 힘드셨죠?
 쉽고 맛있는 건강레시피
 가벼운 식탁과 함께하세요.
@@ -10,6 +11,7 @@
 http://light-table.shop/
 
 ##  1.제작 기간 & 팀원 소개
+
 2021.11.01~ 2021.11.05
 - 김주란
 - 서유리
@@ -17,9 +19,11 @@ http://light-table.shop/
 - 송현정
 
 ## 2. 시연 연상 
+
 [![가벼운식탁](https://img.youtube.com/vi/96KFZ_nZlzk/0.jpg)](https://youtu.be/96KFZ_nZlzk)
 
 ## 3. 초안
+
 ![](https://images.velog.io/images/jurani/post/76616efb-4c35-429d-b21f-9c82d133ff66/lightTable.JPG)
 
 ## 4. 사용 기술
@@ -30,6 +34,7 @@ http://light-table.shop/
 * front-end : HTML5, CSS3, Javascript, jquery, bootstrap
 
 ## 5. 핵심 기능
+
 * 로그인/회원가입
   - 아이디 중복확인 기능
   - 회원가입시 아이디, 비밀번호 유효성 검사
@@ -48,6 +53,7 @@ http://light-table.shop/
      <br>클릭한 메뉴별 댓글 불러오기
 
 ## 6. trouble shooting
+
 <details>
     <summary>
         웹 스크래핑한 db와 댓글을 저장하는 db가 달라 /detail page에 원하는 댓글을 불러오기 어려운 문제
