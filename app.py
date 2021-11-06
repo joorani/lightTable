@@ -1,5 +1,5 @@
-
-import requests
+from secret import db, SECRET_KEY
+# import requests
 from bson import ObjectId
 
 from flask import Flask, render_template, jsonify, request, redirect, url_for
@@ -7,18 +7,14 @@ from bson.json_util import loads, dumps
 import jwt
 import datetime
 import hashlib
-
-from pymongo import MongoClient
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_ FOLDER'] = "./static/profile_pics"
 
-SECRET_KEY = 'lightTable'
 
-client = MongoClient('3.35.47.11', 27017, username="light", password="table")
-db = client.collections
+
 
 # 회원가입
 @app.route('/join/save', methods=['POST'])
